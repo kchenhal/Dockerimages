@@ -1,0 +1,36 @@
+{
+    "deploy": {
+        "requestId": "kc-worker-1",
+        "id": "7",
+        "containerInfo": {
+            "type": "DOCKER",
+            "docker": {
+                "network": "BRIDGE",
+                "image": "micktwomey/sample-dropwizard-service:1.0",
+                "portMappings": [
+                    {
+                        "containerPortType": "LITERAL",
+                        "containerPort": 8081,
+                        "hostPortType": "FROM_OFFER",
+                        "hostPort": 0,
+                        "protocol": "tcp"
+                    },
+                    {
+                        "containerPortType": "LITERAL",
+                        "containerPort": 8080,
+                        "hostPortType": "FROM_OFFER",
+                        "hostPort": 1,
+                        "protocol": "tcp"
+                    }
+                ]
+            }
+        },
+        "resources": {
+            "cpus": 0.1,
+            "memoryMb": 128,
+            "numPorts": 2
+        },
+        "skipHealthchecksOnDeploy": false,
+        "healthcheckUri": "/healthcheck"
+    }
+}

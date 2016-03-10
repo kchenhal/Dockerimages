@@ -1,0 +1,17 @@
+{
+	"deploy": {
+		"requestId": "kc-scheduled-1",
+		"id": "2",
+		"containerInfo": {
+			"type": "DOCKER",
+				"docker": {
+					"image": "kchen007/python-hello-world-timeout"
+				}
+		},
+		"resources": {
+			"cpus": 0.2,
+			"memoryMb": 32,
+			"numPorts": 1
+		}
+	}
+}

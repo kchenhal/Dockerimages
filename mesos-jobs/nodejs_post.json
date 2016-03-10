@@ -1,0 +1,19 @@
+{
+	"message": {
+		"deploy": {
+			"requestId": "kc-run-once-1",
+			"id": "8",
+			"containerInfo": {
+				"type": "DOCKER",
+					"docker": {
+						"image": "kchen007/python-hello-world-timeout"
+					}
+			},
+			"resources": {
+				"cpus": 0.2,
+				"memoryMb": 32,
+				"numPorts": 1
+			}
+		}
+	}
+}
