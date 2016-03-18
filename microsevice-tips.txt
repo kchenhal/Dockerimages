@@ -16,6 +16,13 @@ docker ports
 Swagger editor from an existing project:
 E:\aws-related\swagger-project\hello-world>swagger project edit
 
+# curl to the Singluarity 
+ curl -i -X POST -H "Content-Type: application/json" -d @docker_hello_world.json http://localhost:7099/singularity/api/deploys 
+
+# curl to my nodejs web server, the elment should be message="deploy object" 
+ curl -i -X POST -H "Content-Type: application/json" -d @nodejs_post.json http://localhost:8787/submit 
+
+
 
 centos instllation:
 always run this:
