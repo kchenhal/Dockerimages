@@ -1,0 +1,32 @@
+Docker command:
+
+docker logs [conatiner-id] :
+	show the messages from the main running process in the conatiner
+	
+docker exec -it [container-id] /bin/bash:
+	get a interactive shell from the running container
+	
+docker cp:
+	copy files between host and conatiner
+	
+docker inspect:
+
+docker ports
+
+
+
+centos instllation:
+always run this:
+   sudo yum install epel-release
+
+1. x2go server
+	sudo yum -y install x2goserver x2goserver-xsession
+	
+2. node.js:
+	sudo yum -y nodejs npm
+	
+	
+3. swagger
+   npm install swagger
+   
+ 
