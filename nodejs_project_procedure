@@ -1,0 +1,7 @@
+1. use the swagger editor http://editor.swagger.io/#/ to edit the yaml file
+2. use the swagger editor to generate the server code in node.js 
+3. download and unzip the generated code to local directory.
+4. edit the DefaultService.js
+5. add needed dependcencies in package.json.
+6. run npm install where the package.json located, this will install required dependencies
+7. start the server with "node index.js"
