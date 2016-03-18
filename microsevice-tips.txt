@@ -13,6 +13,8 @@ docker inspect:
 
 docker ports
 
+Swagger editor from an existing project:
+E:\aws-related\swagger-project\hello-world>swagger project edit
 
 
 centos instllation:
