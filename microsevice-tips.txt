@@ -29,4 +29,6 @@ always run this:
 3. swagger
    npm install swagger
    
+4. git
+   sudo yum -y install git
  
