@@ -1,0 +1,124 @@
+---
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "State Micro Service API"
+basePath: "/v1"
+schemes:
+- "http"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /session:
+    post:
+      description: "create a new session\n"
+      operationId: "sessionPOST"
+      parameters: []
+      responses:
+        200:
+          description: "Successful response"
+          schema:
+            type: "string"
+            title: "SessionId"
+      x-swagger-router-controller: "Default"
+  /session/{sessionId}:
+    delete:
+      summary: "terminate the session"
+      description: "terminate the session by session id"
+      operationId: "sessionSessionIdDELETE"
+      parameters:
+      - name: "sessionId"
+        in: "path"
+        description: "the session id to be deleted"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "session not found"
+      x-swagger-router-controller: "Default"
+  /session/{sessionId}/{key}:
+    get:
+      summary: "get the value for the key"
+      description: "get the value for the key"
+      operationId: "sessionSessionIdKeyGET"
+      parameters:
+      - name: "sessionId"
+        in: "path"
+        description: "the session id associated with the key"
+        required: true
+        type: "string"
+      - name: "key"
+        in: "path"
+        description: "the key name"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+            title: "value"
+        400:
+          description: "invalid session id"
+        404:
+          description: "key not found"
+      x-swagger-router-controller: "Default"
+    put:
+      summary: "create or update the key value pair"
+      description: "if the key does not existed, it will create it with the value\
+        \ provided otherwise, it will update the existing key with the new value"
+      operationId: "sessionSessionIdKeyPUT"
+      consumes:
+      - "application/*"
+      - "text/plain"
+      parameters:
+      - name: "sessionId"
+        in: "path"
+        description: "the session id associated with the key"
+        required: true
+        type: "string"
+      - name: "key"
+        in: "path"
+        description: "the key name"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "value"
+        description: "the value for the key"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "key/value pair created or updated"
+        400:
+          description: "invalid session id"
+      x-swagger-router-controller: "Default"
+    delete:
+      summary: "delete the key/value pair"
+      description: "detete the key value"
+      operationId: "sessionSessionIdKeyDELETE"
+      parameters:
+      - name: "sessionId"
+        in: "path"
+        description: "the session id associated with the key"
+        required: true
+        type: "string"
+      - name: "key"
+        in: "path"
+        description: "the key name"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "invalid session id"
+        404:
+          description: "key not found"
+      x-swagger-router-controller: "Default"
+definitions: {}
