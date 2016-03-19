@@ -4,6 +4,12 @@ var uuid = require('node-uuid');
 var bodyParser = require('body-parser');
 var http = require('http');
 
+/*
+  curl -X PUT -H "Content-Type: application/json" -H "Accept: application/json" -d '{"Node": "consul-client-nyc3-1"}' http://demo.consul.io/v1/session/create
+  the session can be used to lock the action when put a kv pair
+  concern with the session:
+   1. it associated with a consul node, if the node is down, then the session is invalid
+*/
 exports.sessionPOST = function(req, res, next) {
   res.setHeader('Content-Type', 'application/json');
   var sessionId = uuid.v1();
