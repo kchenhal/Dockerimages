@@ -17,12 +17,93 @@ var hostPort = process.env.CONSUL_HOST_PORT
 exports.sessionPOST = function(req, res, next) {
   res.setHeader('Content-Type', 'application/json');
   var sessionId = uuid.v1();
-  res.end(JSON.stringify(sessionId))
+
+  var data = {
+    "Name": sessionId.toString()
+  }
+
+  var options = {
+    host: hostName,
+    port: hostPort,
+    path: "v1/session/create",
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Content-Length': data.length
+    }
+  }
+
+  var response_data = '';
+  var postReq = http.request(options, function (postRes) {
+    postRes.on('error', function () {
+      console.log(error);
+      res.statusCode = 400;
+      res.end(error.toString());
+    });
+    postRes.on('data', function (chunk) {
+      response_data += chunk;
+    });
+    postRes.on('end', function () {
+      console.log("end of result");
+      console.log(response_data);
+
+      postReq.end();
+
+      res.end(JSON.stringify(response_data));
+
+
+      //console.log(JSON.parse(response_data));
+    });
+  });
+  postReq.write(data);
+
+  // handle ECONNECTION etc error
+  postReq.on('error', function (err) {
+    console.error(err);
+    res.statusCode = 400;
+    res.end(err.toString());
+  });
 }
 
-exports.sessionSessionIdDELETE = function(req, res, next) {
-  
-  res.end(JSON.stringify(req.params.sessionId+': delete session'));
+exports.sessionSessionIdDELETE = function(args, res, next) {
+  var options = {
+    host: hostName,
+    port: hostPort,
+    path: "v1/session/destroy/"+args.sessionId.value,
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json, text/javascript, */*'
+    }
+  }
+
+  var response_data = '';
+  var postReq = http.request(options, function (postRes) {
+    postRes.on('error', function () {
+      console.log(error);
+      res.statusCode = 400;
+      res.end(error.toString());
+    });
+    postRes.on('data', function (chunk) {
+      response_data += chunk;
+    });
+    postRes.on('end', function () {
+      console.log("end of result");
+      console.log(response_data);
+      res.end(JSON.stringify(response_data));
+
+
+      //console.log(JSON.parse(response_data));
+    });
+  });
+
+  // handle ECONNECTION etc error
+  postReq.on('error', function (err) {
+    console.error(err);
+    res.statusCode = 400;
+    res.end(err.toString());
+  });
+
+  postReq.end();
 }
 
 exports.sessionSessionIdKeyDELETE = function(args, res, next) {
