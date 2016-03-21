@@ -54,10 +54,12 @@ exports.sessionPOST = function(req, res, next) {
 }
 
 exports.sessionSessionIdDELETE = function(args, res, next) {
+
+  // first delete the session
   var options = {
     host: hostName,
     port: hostPort,
-    path: "v1/session/destroy/"+args.sessionId.value,
+    path: "/v1/session/destroy/"+args.sessionId.value,
     method: 'PUT',
     headers: {
       'Accept': 'application/json, text/javascript, */*'
@@ -77,7 +79,7 @@ exports.sessionSessionIdDELETE = function(args, res, next) {
     postRes.on('end', function () {
       console.log("end of result");
       console.log(response_data);
-      res.end(JSON.stringify(response_data));
+      //res.end(JSON.stringify(response_data));
 
 
       //console.log(JSON.parse(response_data));
@@ -87,11 +89,38 @@ exports.sessionSessionIdDELETE = function(args, res, next) {
   // handle ECONNECTION etc error
   postReq.on('error', function (err) {
     console.error(err);
-    res.statusCode = 400;
-    res.end(err.toString());
+    //res.statusCode = 400;
+    ////res.end(err.toString());
   });
 
   postReq.end();
+
+  // now delete all the kv paris under the session
+  var options_kv = {
+      host: hostName,
+      port: hostPort,
+      path: '/v1/kv/'+args.sessionId.value+'/?recurse',
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json, text/javascript, */*'
+      }
+  }
+  var kvReq = http.request(options_kv);
+  kvReq.end();
+  kvReq.on('response', function(response){
+    console.log(response.statusCode);
+    if (response.statusCode != 200) {
+        res.statusCode = response.statusCode;
+        res.end(response.statusMessage);
+    } else {
+        response.on('data', function(chunk) {
+            response_data += chunk;
+            console.log(response_data);
+
+            res.end();
+        });
+    }
+  });
 }
 
 exports.sessionSessionIdKeyDELETE = function(args, res, next) {
