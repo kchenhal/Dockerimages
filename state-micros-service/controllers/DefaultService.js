@@ -16,20 +16,13 @@ var hostPort = process.env.CONSUL_HOST_PORT
 */
 exports.sessionPOST = function(req, res, next) {
   res.setHeader('Content-Type', 'application/json');
-  var sessionId = uuid.v1();
-
-  var data = {
-    "Name": sessionId.toString()
-  }
-
   var options = {
     host: hostName,
     port: hostPort,
     path: "v1/session/create",
     method: 'PUT',
     headers: {
-      'Content-Type': 'text/plain; charset=utf-8',
-      'Content-Length': data.length
+      'Accept': 'application/json, text/javascript, */*'
     }
   }
 
@@ -46,16 +39,9 @@ exports.sessionPOST = function(req, res, next) {
     postRes.on('end', function () {
       console.log("end of result");
       console.log(response_data);
-
-      postReq.end();
-
       res.end(JSON.stringify(response_data));
-
-
-      //console.log(JSON.parse(response_data));
     });
   });
-  postReq.write(JSON.stringify(data));
 
   // handle ECONNECTION etc error
   postReq.on('error', function (err) {
@@ -63,6 +49,8 @@ exports.sessionPOST = function(req, res, next) {
     res.statusCode = 400;
     res.end(err.toString());
   });
+
+  postReq.end();
 }
 
 exports.sessionSessionIdDELETE = function(args, res, next) {
