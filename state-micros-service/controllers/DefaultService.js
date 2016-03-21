@@ -19,10 +19,10 @@ exports.sessionPOST = function(req, res, next) {
   var options = {
     host: hostName,
     port: hostPort,
-    path: "v1/session/create",
+    path: "/v1/session/create",
     method: 'PUT',
     headers: {
-      'Accept': 'application/json, text/javascript, */*'
+      'Accept': 'application/json'
     }
   }
 
