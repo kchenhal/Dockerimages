@@ -62,7 +62,7 @@ exports.sessionSessionIdKeyDELETE = function(args, res, next) {
   });
 
   // handle ECONNECTION etc error
-  postReq.on('error', function (err) {
+  getReq.on('error', function (err) {
     console.error(err);
     res.statusCode = 400;
     res.end(err.toString());
@@ -115,7 +115,7 @@ exports.sessionSessionIdKeyGET = function(args, res, next) {
   });
 
   // handle ECONNECTION etc error
-  postReq.on('error', function (err) {
+  getReq.on('error', function (err) {
     console.error(err);
     res.statusCode = 400;
     res.end(err.toString());
