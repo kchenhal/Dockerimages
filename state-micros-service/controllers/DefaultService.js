@@ -3,6 +3,7 @@
 var uuid = require('node-uuid');
 var bodyParser = require('body-parser');
 var http = require('http');
+var utils = require('./Util');
 
 // THE consule URL
 var hostName = process.env.CONSUL_HOST_NAME
@@ -26,31 +27,9 @@ exports.sessionPOST = function(req, res, next) {
     }
   }
 
-  var response_data = '';
-  var postReq = http.request(options, function (postRes) {
-    postRes.on('error', function () {
-      console.log(error);
-      res.statusCode = 400;
-      res.end(error.toString());
-    });
-    postRes.on('data', function (chunk) {
-      response_data += chunk;
-    });
-    postRes.on('end', function () {
-      console.log("end of result");
-      console.log(response_data);
-      res.end(JSON.stringify(response_data));
-    });
+  utils.httpReq(options, res, null, function(body){
+    res.end(JSON.stringify(body));
   });
-
-  // handle ECONNECTION etc error
-  postReq.on('error', function (err) {
-    console.error(err);
-    res.statusCode = 400;
-    res.end(err.toString());
-  });
-
-  postReq.end();
 }
 
 exports.sessionSessionIdDELETE = function(args, res, next) {
@@ -66,34 +45,9 @@ exports.sessionSessionIdDELETE = function(args, res, next) {
     }
   }
 
-  var response_data = '';
-  var postReq = http.request(options, function (postRes) {
-    postRes.on('error', function () {
-      console.log(error);
-      res.statusCode = 400;
-      res.end(error.toString());
-    });
-    postRes.on('data', function (chunk) {
-      response_data += chunk;
-    });
-    postRes.on('end', function () {
-      console.log("end of result");
-      console.log(response_data);
-      //res.end(JSON.stringify(response_data));
-
-
-      //console.log(JSON.parse(response_data));
-    });
+  utils.httpReq(options, res, null, function(body){
+    console.log('session deleted, now delete kv under the session');
   });
-
-  // handle ECONNECTION etc error
-  postReq.on('error', function (err) {
-    console.error(err);
-    //res.statusCode = 400;
-    ////res.end(err.toString());
-  });
-
-  postReq.end();
 
   // now delete all the kv paris under the session
   var options_kv = {
@@ -105,21 +59,8 @@ exports.sessionSessionIdDELETE = function(args, res, next) {
         'Accept': 'application/json, text/javascript, */*'
       }
   }
-  var kvReq = http.request(options_kv);
-  kvReq.end();
-  kvReq.on('response', function(response){
-    console.log(response.statusCode);
-    if (response.statusCode != 200) {
-        res.statusCode = response.statusCode;
-        res.end(response.statusMessage);
-    } else {
-        response.on('data', function(chunk) {
-            response_data += chunk;
-            console.log(response_data);
-
-            res.end();
-        });
-    }
+  utils.httpReq(options_kv, res, null, function(body){
+    res.end(body);
   });
 }
 
@@ -137,33 +78,9 @@ exports.sessionSessionIdKeyDELETE = function(args, res, next) {
         'Accept': 'application/json, text/javascript, */*'
       }
   }
-  
-  
-  var response_data = '';
-  var getReq = http.request(options);
-  getReq.end();
-  
-  getReq.on('response', function(response){
-    console.log(response.statusCode);
-    if (response.statusCode != 200) {
-        res.statusCode = response.statusCode;
-        res.end(response.statusMessage);
-    } else {
-        response.on('data', function(chunk) {
-            response_data += chunk;
-            var result = JSON.parse(response_data);
-            console.log(result);
 
-            res.end();
-        });
-    }
-  });
-
-  // handle ECONNECTION etc error
-  getReq.on('error', function (err) {
-    console.error(err);
-    res.statusCode = 400;
-    res.end(err.toString());
+  utils.httpReq(options, res, null, function(body){
+    res.end(body);
   });
 }
 
@@ -173,8 +90,7 @@ exports.sessionSessionIdKeyGET = function(args, res, next) {
   * sessionId (String)
   * key (String)
   **/
-  //console.log(res);
-  
+
   var reqUrl = '/v1/kv/'+args.sessionId.value+'/'+args.key.value;
   var urlwithHost = 'http://'+hostName+":"+hostPort+reqUrl;
   console.log(urlwithHost);
@@ -188,35 +104,12 @@ exports.sessionSessionIdKeyGET = function(args, res, next) {
         'Accept': 'application/json, text/javascript, */*'
       }
   }
-  
-  
-  var response_data = '';
-  var getReq = http.request(options);
-  getReq.end();
-  
-  getReq.on('response', function(response){
-    console.log(response.statusCode);
-    if (response.statusCode != 200) {
-        res.statusCode = response.statusCode;
-        res.end(response.statusMessage);
-    } else {
-        response.on('data', function(chunk) {
-            response_data += chunk;
-            var result = JSON.parse(response_data);
-            console.log(result[0]);
 
-            var b64s = new Buffer(result[0].Value, 'base64')
-
-            res.end(b64s.toString());
-        });
-    }
-  });
-
-  // handle ECONNECTION etc error
-  getReq.on('error', function (err) {
-    console.error(err);
-    res.statusCode = 400;
-    res.end(err.toString());
+  utils.httpReq(options, res, null, function(body){
+    var result = JSON.parse(body);
+    console.log(result[0]);
+    var b64s = new Buffer(result[0].Value, 'base64')
+    res.end(b64s.toString());
   });
 }
 
@@ -233,8 +126,6 @@ exports.sessionSessionIdKeyPUT = function(args, res, next) {
   console.log(args.key.value);
   console.log(args.value.value);
 
-
-  
   var data = args.value.value;
   
   var reqUrl = '/v1/kv/'+args.sessionId.value+'/'+args.key.value;
@@ -252,46 +143,8 @@ exports.sessionSessionIdKeyPUT = function(args, res, next) {
       }
   }
 
-  // for use with proxy
-    var options2 = {
-      host: 'np1prxy801.corp.halliburton.com',
-      port: '80',
-      path: urlwithHost,
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'text/plain; charset=utf-8'
-      }
-  }
-
-  var response_data = '';
-  var postReq = http.request(options, function (postRes) {
-    postRes.on('error', function () {
-      console.log(error);
-      res.statusCode = 400;
-      res.end(error.toString());
-    });
-    postRes.on('data', function (chunk) {
-      response_data += chunk;
-    });
-    postRes.on('end', function () {
-      console.log("end of result");
-      console.log(response_data);
-
-      postReq.end();
-
-      res.end(JSON.stringify(response_data));
-
-
-      //console.log(JSON.parse(response_data));
-    });
-  });
-  postReq.write(data);
-
-  // handle ECONNECTION etc error
-  postReq.on('error', function (err) {
-    console.error(err);
-    res.statusCode = 400;
-    res.end(err.toString());
+  utils.httpReq(options, res, data, function(body){
+    res.end(JSON.stringify(body));
   });
 }
 
