@@ -22,9 +22,11 @@ E:\aws-related\swagger-project\hello-world>swagger project edit
 # curl to my nodejs web server, the elment should be message="deploy object" 
  curl -i -X POST -H "Content-Type: application/json" -d @nodejs_post.json http://localhost:8787/submit 
 
-# curl with proxy
+# curl with proxy, if the password contains @, put "" around it.
 E:\aws-related\mesos-frame-work-jobs>curl --proxy http://np1prxy801.corp.halliburton.com:80 --proxy-user userName:password -X POST -H "Content-Type: application/json" -d @nodejs_post.json http://52.91.164.216:8787/submit
 
+# git with proxy
+  git config --global http://np1prxy801.corp.halliburton.com:80
 centos instllation:
 always run this:
    sudo yum install epel-release
