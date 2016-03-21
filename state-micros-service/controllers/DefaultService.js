@@ -55,7 +55,7 @@ exports.sessionPOST = function(req, res, next) {
       //console.log(JSON.parse(response_data));
     });
   });
-  postReq.write(data);
+  postReq.write(JSON.stringify(data));
 
   // handle ECONNECTION etc error
   postReq.on('error', function (err) {
