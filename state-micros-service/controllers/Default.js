@@ -13,6 +13,10 @@ module.exports.sessionSessionIdDELETE = function sessionSessionIdDELETE (req, re
   Default.sessionSessionIdDELETE(req.swagger.params, res, next);
 };
 
+module.exports.sessionSessionIdGET = function sessionSessionIdGET (req, res, next) {
+  Default.sessionSessionIdGET(req.swagger.params, res, next);
+};
+
 module.exports.sessionSessionIdKeyDELETE = function sessionSessionIdKeyDELETE (req, res, next) {
   Default.sessionSessionIdKeyDELETE(req.swagger.params, res, next);
 };

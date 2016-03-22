@@ -64,8 +64,30 @@ exports.sessionSessionIdDELETE = function(args, res, next) {
   });
 }
 
+exports.sessionSessionIdGET = function(args, res, next) {
+  /**
+   * parameters expected in the args:
+   * sessionId (String)
+   **/
+  // now delete all the kv paris under the session
+  var options = {
+    host: hostName,
+    port: hostPort,
+    path: '/v1/kv/'+args.sessionId.value+'/?recurse',
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json, text/javascript, */*'
+    }
+  }
+  utils.httpReq(options, res, null, function(body){
+    res.end(body);
+  });
+
+}
+
 exports.sessionSessionIdKeyDELETE = function(args, res, next) {
-  var reqUrl = '/v1/kv/'+args.sessionId.value+'/'+args.key.value;
+  string keyName = utils.removeLeadingSlash(args.key.value);
+  var reqUrl = '/v1/kv/'+args.sessionId.value+'/'+keyName;
   var urlwithHost = 'http://'+hostName+":"+hostPort+reqUrl;
   console.log(urlwithHost);
   
@@ -90,8 +112,8 @@ exports.sessionSessionIdKeyGET = function(args, res, next) {
   * sessionId (String)
   * key (String)
   **/
-
-  var reqUrl = '/v1/kv/'+args.sessionId.value+'/'+args.key.value;
+  string keyName = utils.removeLeadingSlash(args.key.value);
+  var reqUrl = '/v1/kv/'+args.sessionId.value+'/'+keyName;
   var urlwithHost = 'http://'+hostName+":"+hostPort+reqUrl;
   console.log(urlwithHost);
   
@@ -128,7 +150,8 @@ exports.sessionSessionIdKeyPUT = function(args, res, next) {
 
   var data = args.value.value;
   
-  var reqUrl = '/v1/kv/'+args.sessionId.value+'/'+args.key.value;
+  string keyName = utils.removeLeadingSlash(args.key.value);
+  var reqUrl = '/v1/kv/'+args.sessionId.value+'/'+keyName;
   var urlwithHost = 'http://'+hostName+":"+hostPort+reqUrl;
   console.log(urlwithHost);
   

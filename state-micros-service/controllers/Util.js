@@ -7,7 +7,7 @@ var http = require('http');
 // and if there are any response data, it will be returned
 // from responseData.
 // if error occured, it will send the error to back to orginial request and it will not pass the control back to caller.
-exports.httpReq(options, res, postData, callback_fucntion) {
+exports.httpReq = function(options, res, postData, callback_function) {
   var newReq = http.request(options);
 
   newReq.on('response', function(response){
@@ -37,8 +37,16 @@ exports.httpReq(options, res, postData, callback_fucntion) {
     res.end(err.toString());
   });
 
-  if (postdata != null && postData != 'undefined') {
+  if (postData != null && postData != 'undefined') {
     newReq.write(postData);
   }
   newReq.end();
+}
+
+export.removeLeadingSlash = function (s) {
+  if (s.startsWith('/')) {
+    return s.substring(1);
+  } else {
+    rturn s;
+  }
 }

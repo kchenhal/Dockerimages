@@ -24,6 +24,23 @@ paths:
             title: "SessionId"
       x-swagger-router-controller: "Default"
   /session/{sessionId}:
+    get:
+      summary: "get all the kv paris under the session"
+      description: "it will return all the key value paris"
+      operationId: "sessionSessionIdGET"
+      parameters:
+      - name: "sessionId"
+        in: "path"
+        description: "the session id whose child kv pairs will be returned"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "sucessful operation"
+          schema:
+            type: "string"
+            title: "result"
+      x-swagger-router-controller: "Default"
     delete:
       summary: "terminate the session"
       description: "terminate the session by session id"
