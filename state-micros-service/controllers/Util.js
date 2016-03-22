@@ -43,10 +43,10 @@ exports.httpReq = function(options, res, postData, callback_function) {
   newReq.end();
 }
 
-export.removeLeadingSlash = function (s) {
+exports.removeLeadingSlash = function (s) {
   if (s.startsWith('/')) {
     return s.substring(1);
   } else {
-    rturn s;
+    return s;
   }
 }
