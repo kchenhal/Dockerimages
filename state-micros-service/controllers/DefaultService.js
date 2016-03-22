@@ -80,7 +80,19 @@ exports.sessionSessionIdGET = function(args, res, next) {
     }
   }
   utils.httpReq(options, res, null, function(body){
-    res.end(body);
+    var result = JSON.parse(body);
+    var resultJsonArray = [];
+    for (var i=0; i < result.length; i++) {
+      var b64s = new Buffer(result[i].Value, 'base64')
+      resultJsonArray.push({
+        "Key": result[i].Key,
+        "Value": b64s.toString()
+
+      });
+    }
+
+    res.setRequestHeader("content-type: application/json");
+    res.end(resultJsonArray);
   });
 
 }
