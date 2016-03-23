@@ -28,7 +28,8 @@ exports.sessionPOST = function(req, res, next) {
   }
 
   utils.httpReq(options, res, null, function(body){
-    res.end(JSON.stringify(body));
+    var result = JSON.parse(body);
+    res.end(result[0].ID);
   });
 }
 

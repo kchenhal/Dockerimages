@@ -42,8 +42,9 @@ paths:
         200:
           description: "sucessful operation"
           schema:
-            type: "string"
-            title: "result"
+            type: "array"
+            items:
+              $ref: "#/definitions/kv"
       x-swagger-router-controller: "Default"
     delete:
       summary: "delete all of the client's state information"
@@ -133,4 +134,11 @@ paths:
         200:
           description: "OK"
       x-swagger-router-controller: "Default"
-definitions: {}
+definitions:
+  kv:
+    type: "object"
+    properties:
+      Key:
+        type: "string"
+      Value:
+        type: "string"
