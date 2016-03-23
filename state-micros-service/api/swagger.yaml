@@ -31,6 +31,7 @@ paths:
       summary: "get all the state information for the client"
       description: "Use can call this end point to find all the state information\
         \ stored under the clientId"
+      operationId: "sessionSessionIdGET"
       parameters:
       - name: "clientId"
         in: "path"
@@ -43,6 +44,7 @@ paths:
           schema:
             type: "string"
             title: "result"
+      x-swagger-router-controller: "Default"
     delete:
       summary: "delete all of the client's state information"
       description: "When user finished, he should call this end point to clean up\
