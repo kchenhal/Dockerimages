@@ -5,3 +5,10 @@
 5. add needed dependcencies in package.json.
 6. run npm install where the package.json located, this will install required dependencies
 7. start the server with "node index.js"
+
+
+geneate test (manual step)
+1. under the root direcotry of the project, go to api, the create swagger directory
+2. copy the swagger.yaml to the swagger directory.
+3. go back to root directory, create test/api/client directory
+4. go back root directory, run 'swagger project generate-test .' this will create test under test/api/client.
