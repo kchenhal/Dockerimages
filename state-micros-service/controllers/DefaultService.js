@@ -86,7 +86,7 @@ exports.sessionClientIdGET = function(args, res, next) {
     for (var i=0; i < result.length; i++) {
       var b64s = new Buffer(result[i].Value, 'base64')
       resultJsonArray.push({
-        "Key": result[i].Key,
+        "Key": utils.removeBeforeCh(esult[i].Key, '/'),
         "Value": b64s.toString()
 
       });

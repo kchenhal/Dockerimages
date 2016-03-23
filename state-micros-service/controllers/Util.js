@@ -45,8 +45,21 @@ exports.httpReq = function(options, res, postData, callback_function) {
 
 exports.removeLeadingSlash = function (s) {
   if (s.startsWith('/')) {
-    return s.substring(1);
+    return s.substr(1);
   } else {
     return s;
+  }
+}
+
+// this function remove the characters before ch
+// for example
+// str = 'this/is a test', ch='/'
+// the function will return is a test
+exports.removeBeforeCh = function (str, ch) {
+  var idx = str.search(ch);
+  if (idx >= 0) {
+    return str.substr(idx + 1);
+  } else {
+    return str;
   }
 }
