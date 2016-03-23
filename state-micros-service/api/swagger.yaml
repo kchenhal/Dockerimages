@@ -11,9 +11,12 @@ consumes:
 produces:
 - "application/json"
 paths:
-  /session:
+  /state/client:
     post:
-      description: "create a new session\n"
+      summary: "create a new client to store its state information\n"
+      description: "When user want to store state information, he should calll this\
+        \ end point and get its unique client id. then pass the id for rest of the\
+        \ operation"
       operationId: "sessionPOST"
       parameters: []
       responses:
@@ -21,17 +24,17 @@ paths:
           description: "Successful response"
           schema:
             type: "string"
-            title: "SessionId"
+            title: "clientId"
       x-swagger-router-controller: "Default"
-  /session/{sessionId}:
+  /state/{clientId}:
     get:
-      summary: "get all the kv paris under the session"
-      description: "it will return all the key value paris"
-      operationId: "sessionSessionIdGET"
+      summary: "get all the state information for the client"
+      description: "Use can call this end point to find all the state information\
+        \ stored under the clientId"
       parameters:
-      - name: "sessionId"
+      - name: "clientId"
         in: "path"
-        description: "the session id whose child kv pairs will be returned"
+        description: "the client id whose state information will be returned"
         required: true
         type: "string"
       responses:
@@ -40,32 +43,31 @@ paths:
           schema:
             type: "string"
             title: "result"
-      x-swagger-router-controller: "Default"
     delete:
-      summary: "terminate the session"
-      description: "terminate the session by session id"
+      summary: "delete all of the client's state information"
+      description: "When user finished, he should call this end point to clean up\
+        \ all the stored state information"
       operationId: "sessionSessionIdDELETE"
       parameters:
-      - name: "sessionId"
+      - name: "clientId"
         in: "path"
-        description: "the session id to be deleted"
+        description: "the client id to be deleted"
         required: true
         type: "string"
       responses:
         200:
           description: "OK"
-        404:
-          description: "session not found"
       x-swagger-router-controller: "Default"
-  /session/{sessionId}/{key}:
+  /state/{clientId}/{key}:
     get:
-      summary: "get the value for the key"
-      description: "get the value for the key"
+      summary: "get the state identified by the key"
+      description: "User can call this end point to retrieve the value for the particular\
+        \ state"
       operationId: "sessionSessionIdKeyGET"
       parameters:
-      - name: "sessionId"
+      - name: "clientId"
         in: "path"
-        description: "the session id associated with the key"
+        description: "the state id associated with the key"
         required: true
         type: "string"
       - name: "key"
@@ -79,23 +81,20 @@ paths:
           schema:
             type: "string"
             title: "value"
-        400:
-          description: "invalid session id"
         404:
           description: "key not found"
       x-swagger-router-controller: "Default"
     put:
-      summary: "create or update the key value pair"
+      summary: "create or update the state"
       description: "if the key does not existed, it will create it with the value\
         \ provided otherwise, it will update the existing key with the new value"
       operationId: "sessionSessionIdKeyPUT"
       consumes:
-      - "application/*"
       - "text/plain"
       parameters:
-      - name: "sessionId"
+      - name: "clientId"
         in: "path"
-        description: "the session id associated with the key"
+        description: "the client id associated with the key"
         required: true
         type: "string"
       - name: "key"
@@ -112,17 +111,15 @@ paths:
       responses:
         200:
           description: "key/value pair created or updated"
-        400:
-          description: "invalid session id"
       x-swagger-router-controller: "Default"
     delete:
-      summary: "delete the key/value pair"
-      description: "detete the key value"
+      summary: "delete the state identified by key"
+      description: "delete the state identified by the key"
       operationId: "sessionSessionIdKeyDELETE"
       parameters:
-      - name: "sessionId"
+      - name: "clientId"
         in: "path"
-        description: "the session id associated with the key"
+        description: "the client id associated with the key"
         required: true
         type: "string"
       - name: "key"
@@ -133,9 +130,5 @@ paths:
       responses:
         200:
           description: "OK"
-        400:
-          description: "invalid session id"
-        404:
-          description: "key not found"
       x-swagger-router-controller: "Default"
 definitions: {}
