@@ -32,7 +32,7 @@ exports.sessionPOST = function(req, res, next) {
   });
 }
 
-exports.sessionclientIdDELETE = function(args, res, next) {
+exports.sessionClientIdDELETE = function(args, res, next) {
 
   // first delete the session
   var options = {
@@ -64,7 +64,7 @@ exports.sessionclientIdDELETE = function(args, res, next) {
   });
 }
 
-exports.sessionclientIdGET = function(args, res, next) {
+exports.sessionClientIdGET = function(args, res, next) {
   /**
    * parameters expected in the args:
    * clientId (String)
@@ -97,7 +97,7 @@ exports.sessionclientIdGET = function(args, res, next) {
 
 }
 
-exports.sessionclientIdKeyDELETE = function(args, res, next) {
+exports.sessionClientIdKeyDELETE = function(args, res, next) {
   var keyName = utils.removeLeadingSlash(args.key.value);
   var reqUrl = '/v1/kv/'+args.clientId.value+'/'+keyName;
   var urlwithHost = 'http://'+hostName+":"+hostPort+reqUrl;
@@ -118,7 +118,7 @@ exports.sessionclientIdKeyDELETE = function(args, res, next) {
   });
 }
 
-exports.sessionclientIdKeyGET = function(args, res, next) {
+exports.sessionClientIdKeyGET = function(args, res, next) {
   /**
    * parameters expected in the args:
   * clientId (String)
@@ -147,7 +147,7 @@ exports.sessionclientIdKeyGET = function(args, res, next) {
   });
 }
 
-exports.sessionclientIdKeyPUT = function(args, res, next) {
+exports.sessionClientIdKeyPUT = function(args, res, next) {
   /**
    * parameters expected in the args:
   * clientId (String)
