@@ -21,6 +21,29 @@ running docker within weave network
 3. start the container and point to the consul hostname defined within the weave network
    docker run -d --rm -p 8081:8080 -e CONSUL_HOST_NAME=consul.ienergy.devcommunity -e CONSUL_HOST_PORT=8500 kchen007/state
 
+running docker web app behind nginx with load banlancer
+  a simple configuration looks like:
+  http {
+  	upstream mystates {
+  		server host1:port;
+  		server host2:port;
+  	}
+  	
+  	server {
+  		listen 80;
+  		server_name localhost;
+  		
+  		location /statems/ {
+  			# the ending slash is important,
+  			# without the ending /, it will forward /statems/.... as part of url to the real server.
+  			# with the ending /, it will strip the /statems, just send the rest to the real server.
+  			# for example, use put http://nginxserver/statems/v1/.....
+  			# with the ending /, the request will be http://host1:port/v1/....
+  			# otherwise, it will be http://host1:port/statems/v1/.....
+  			proxy_pass http://mystates/; 
+  		}
+  }
+
 Swagger editor from an existing project:
 E:\aws-related\swagger-project\hello-world>swagger project edit
 
