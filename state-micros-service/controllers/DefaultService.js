@@ -16,7 +16,7 @@ var hostPort = process.env.CONSUL_HOST_PORT
    1. it associated with a consul node, if the node is down, then the session is invalid
 */
 exports.sessionPOST = function(req, res, next) {
-  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Content-Type', 'text/plain');
   var options = {
     host: hostName,
     port: hostPort,
@@ -29,7 +29,7 @@ exports.sessionPOST = function(req, res, next) {
 
   utils.httpReq(options, res, null, function(body){
     var result = JSON.parse(body);
-    res.end(result[0].ID);
+    res.end(result.ID);
   });
 }
 
