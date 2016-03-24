@@ -13,6 +13,14 @@ docker inspect:
 
 docker ports
 
+running docker within weave network
+1. launch weave if not on the node:
+   weave launch --dns-domain="ienergy.devcommunity." 172.31.54.85 (the ip address is the master node, and we are using the domain as set)
+2. setup the weave environment variable
+   eval $(weave env)
+3. start the container and point to the consul hostname defined within the weave network
+   docker run -d --rm -p 8081:8080 -e CONSUL_HOST_NAME=consul.ienergy.devcommunity -e CONSUL_HOST_PORT=8500 kchen007/state
+
 Swagger editor from an existing project:
 E:\aws-related\swagger-project\hello-world>swagger project edit
 
