@@ -5,4 +5,6 @@
 2. Cannot connect to the docker engine endpoint
    this is when do docker info on a swarm, the node's error.  here is the command we start the swarm agent on the node:
       docker run -d swarm join --advertise=172.31.60.98:2375 consul://172.31.54.85:8500
-   then in /usr/lib/systemd/system/docker.service, you should add -H tcp://0.0.0.0:2375 in ExecStart line.
+   then in /usr/lib/systemd/system/docker.service, you should add -H tcp://0.0.0.0:2375 in ExecStart line. then run:
+     systemctl daemon-reload 
+     service docker restart
