@@ -1,3 +1,8 @@
 1. Error response from daemon: 500 Internal Server Error: Cannot start container 21d8f030d5b7a62974ed19486730de351a012c09408a8614b767aa6a0ef10a45: subnet sandbox join failed for "10.0.0.0/24": vxlan interface creation failed for subnet "10.0.0.0/24": failed in prefunc: failed to set namespace on link "vxlandc0c46f": invalid argument
    this is error message is when I try to run my container on a overlay driver, and my unix kernel is less than 3.15, it did not support it.
    see https://forums.docker.com/t/overlay-network-error-cannot-start-container/4492
+   
+2. Cannot connect to the docker engine endpoint
+   this is when do docker info on a swarm, the node's error.  here is the command we start the swarm agent on the node:
+      docker run -d swarm join --advertise=172.31.60.98:2375 consul://172.31.54.85:8500
+   then in /usr/lib/systemd/system/docker.service, you should add -H tcp://0.0.0.0:2375 in ExecStart line.
