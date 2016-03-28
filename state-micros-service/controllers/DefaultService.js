@@ -17,38 +17,11 @@ var hostPort = process.env.CONSUL_HOST_PORT
 */
 exports.sessionPOST = function(req, res, next) {
   res.setHeader('Content-Type', 'text/plain');
-  var options = {
-    host: hostName,
-    port: hostPort,
-    path: "/v1/session/create",
-    method: 'PUT',
-    headers: {
-      'Accept': 'application/json'
-    }
-  }
-
-  utils.httpReq(options, res, null, function(body){
-    var result = JSON.parse(body);
-    res.end(result.ID);
-  });
+  var clientId = uuid.v4();
+  res.end(clientId.toString());
 }
 
 exports.sessionClientIdDELETE = function(args, res, next) {
-
-  // first delete the session
-  var options = {
-    host: hostName,
-    port: hostPort,
-    path: "/v1/session/destroy/"+args.clientId.value,
-    method: 'PUT',
-    headers: {
-      'Accept': 'application/json, text/javascript, */*'
-    }
-  }
-
-  utils.httpReq(options, res, null, function(body){
-    console.log('session deleted, now delete kv under the session');
-  });
 
   // now delete all the kv paris under the session
   var options_kv = {
