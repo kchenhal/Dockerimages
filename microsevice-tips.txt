@@ -19,9 +19,9 @@ running docker within weave network
 2. setup the weave environment variable
    eval $(weave env)
 3. start the container and point to the consul hostname defined within the weave network, you can give it a host name for service discovery
-   docker run -d -h state -p 8080:8080 -e CONSUL_HOST_NAME=consul.ienergy.devcommunity -e CONSUL_HOST_PORT=8500 kchen007/state
+   docker run -d -h state.ienergy.devcommunity -p 8080:8080 -e CONSUL_HOST_NAME=consul.ienergy.devcommunity -e CONSUL_HOST_PORT=8500 kchen007/state
 4. you can start another state micro service on another machine or the same machine, with the same HOSTNAME, like above
-   docker run -d -h state -p 8080:8080 -e CONSUL_HOST_NAME=consul.ienergy.devcommunity -e CONSUL_HOST_PORT=8500 kchen007/state
+   docker run -d -h state.ienergy.devcommunity -p 8080:8080 -e CONSUL_HOST_NAME=consul.ienergy.devcommunity -e CONSUL_HOST_PORT=8500 kchen007/state
 5. what will happen is that weave DNS will return both ipaddress for the host name "state" alternatively. if you have more, it will do the round robin to return each ipaddress.
 6. with this, we can use nginx docker container as reverse proxy and load balance to dispatch request among all the state micro-service container with the same host name. 
 7. the /etc/nginx/nginx.conf will looks like this, we need create a new container to copy the file
