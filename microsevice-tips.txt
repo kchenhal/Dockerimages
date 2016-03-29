@@ -1,18 +1,16 @@
 Docker command:
-
-docker logs [conatiner-id] :
+ 1. docker logs [conatiner-id] :
 	show the messages from the main running process in the conatiner
-	
-docker exec -it [container-id] /bin/bash:
+ 2. docker exec -it [container-id] /bin/bash:
 	get a interactive shell from the running container
-	
-docker cp:
+ 3. docker cp:
 	copy files between host and conatiner
-	
-docker inspect:
+ 4. docker inspect:
+ 5. docker ports
 
-docker ports
-
+using Marathon frame work to do hostport-container port mapping
+ it requires to configure  /etc/mesos-slave/resources correctly.
+ 
 running docker within weave network
 1. launch weave if not on the node:
    weave launch --dns-domain="ienergy.devcommunity." 172.31.54.85 (the ip address is the master node, and we are using the domain as set)
