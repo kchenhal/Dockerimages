@@ -1,0 +1,29 @@
+{
+  "id": "statems",
+  "cpus": 0.1,
+  "mem": 32.0,
+  "instances": 1,
+  "volumes": [],
+  "container": {
+      "type": "DOCKER",
+ 	  "docker": {
+		"image": "kchen007/state",
+		"network": "BRIDGE",
+		"portMappings": [
+		  {
+			"containerPort": 8080,
+			"hostPort": 0,
+			"servicePort": 0,
+			"protocol": "tcp"
+		  }
+		],
+		"privileged": false,
+		"parameters": [
+		  {"key": "hostname", "value": "state2.ienergy.devcommunity" },
+		  {"key": "env",      "value":"CONSUL_HOST_NAME=consul.ienergy.devcommunity"},
+		  {"key": "env",      "value":"CONSUL_HOST_PORT=8500"}
+		],
+		"forcePullImage": false
+	  }
+  }	  
+}

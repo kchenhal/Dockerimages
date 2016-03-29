@@ -1,0 +1,28 @@
+{
+  "id": "test-helo",
+  "cpus": 0.2,
+  "mem": 64.0,
+  "cmd": "python3 -m http.server 8080",
+  "instances": 1,
+  "volumes": [],
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "python:3",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 0,
+          "servicePort": 28080,
+          "protocol": "tcp"
+        }
+      ],
+      "privileged": false,
+      "parameters": [
+	  {"key": "hostname", "value": "python-hello-world.ienergy.devcommunity" }
+      ],
+      "forcePullImage": false
+    }
+  }
+}
