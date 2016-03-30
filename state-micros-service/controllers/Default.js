@@ -2,8 +2,13 @@
 
 var url = require('url');
 
+
 var Default = require('./DefaultService');
 
+
+module.exports.healthCheckGET = function healthCheckGET (req, res, next) {
+  Default.healthCheckGET(req.swagger.params, res, next);
+};
 
 module.exports.sessionPOST = function sessionPOST (req, res, next) {
   Default.sessionPOST(req.swagger.params, res, next);

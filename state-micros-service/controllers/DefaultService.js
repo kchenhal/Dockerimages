@@ -9,6 +9,9 @@ var utils = require('./Util');
 var hostName = process.env.CONSUL_HOST_NAME
 var hostPort = process.env.CONSUL_HOST_PORT
 
+exports.healthCheckGET = function(args, res, next) {
+  res.end("ok");
+}
 /*
   curl -X PUT -H "Content-Type: application/json" -H "Accept: application/json" -d '{"Node": "consul-client-nyc3-1"}' http://demo.consul.io/v1/session/create
   the session can be used to lock the action when put a kv pair

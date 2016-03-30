@@ -11,7 +11,18 @@ consumes:
 produces:
 - "application/json"
 paths:
-  /state/client:
+  /healthCheck:
+    get:
+      summary: "used to check if the service is up and running"
+      operationId: "healthCheckGET"
+      produces:
+      - "text/plain"
+      parameters: []
+      responses:
+        200:
+          description: "service is up and running"
+      x-swagger-router-controller: "Default"
+  /state/proc/client:
     post:
       summary: "create a new client to store its state information\n"
       description: "When user want to store state information, he should calll this\
@@ -26,7 +37,7 @@ paths:
             type: "string"
             title: "clientId"
       x-swagger-router-controller: "Default"
-  /state/{clientId}:
+  /state/proc/{clientId}:
     get:
       summary: "get all the state information for the client"
       description: "Use can call this end point to find all the state information\
@@ -61,7 +72,7 @@ paths:
         200:
           description: "OK"
       x-swagger-router-controller: "Default"
-  /state/{clientId}/{key}:
+  /state/proc/{clientId}/{key}:
     get:
       summary: "get the state identified by the key"
       description: "User can call this end point to retrieve the value for the particular\
@@ -90,7 +101,8 @@ paths:
     put:
       summary: "create or update the state"
       description: "if the key does not existed, it will create it with the value\
-        \ provided otherwise, it will update the existing key with the new value"
+        \ provided otherwise, it will update the existing key with the new value.\
+        \ This is the same pattern that Consul use."
       operationId: "sessionSessionIdKeyPUT"
       consumes:
       - "text/plain"
