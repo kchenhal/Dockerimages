@@ -1,7 +1,7 @@
 {
-  "id": "statems",
+  "id": "statems-2",
   "cpus": 0.1,
-  "mem": 32.0,
+  "mem": 64.0,
   "instances": 1,
   "volumes": [],
   "container": {

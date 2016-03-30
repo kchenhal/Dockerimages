@@ -12,6 +12,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.raw());
 app.use(bodyParser.text());
 
+//app.use('/', function(req, res) {
+//  res.end('ok');
+//});
 // swaggerRouter configuration
 var options = {
   swaggerUi: '/swagger.json',

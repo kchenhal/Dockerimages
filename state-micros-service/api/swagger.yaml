@@ -13,6 +13,8 @@ produces:
 paths:
   /healthCheck:
     get:
+      tags:
+        - HealthCheck 
       summary: "used to check if the service is up and running"
       operationId: "healthCheckGET"
       produces:
