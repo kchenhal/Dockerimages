@@ -66,6 +66,22 @@ E:\aws-related\mesos-frame-work-jobs>curl --proxy http://np1prxy801.corp.hallibu
 
 # git with proxy
   git config --global http://np1prxy801.corp.halliburton.com:80
+
+# git with ssh key
+  if you use git bash shell, the ssh configuration is under ~/.ssh
+  for windows shell, it looks like it is in c:\users\username\.ssh
+  you need create your own private/public key pair, that will be put under your .ssh direcotry
+  then copy and paste the public key to the git server's public key list, so that server can trust you.
+  
+  for git.lgc.com, it used an old handshake, you need go to .ssh directory, edit config file with the following
+    Host git.lgc.com
+        KexAlgorithms +diffie-hellman-group1-sha1
+  whenever you clone a repository, also need copy the commit hook, for example:
+     scp -p -P 29418 hb36382@git.lgc.com:hooks/commit-msg distarch_state_service/.git/hooks
+  
+  if you have previous commit without commit id, even you copied the hook, it still will not work. you need clean up all the previous commit. for me, just clone another place, copy my change and before I do commit, copy the commit hook.
+
+  
 centos instllation:
 always run this:
    sudo yum install epel-release
