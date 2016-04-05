@@ -98,4 +98,10 @@ always run this:
    
 4. git
    sudo yum -y install git
- 
+   
+Rundek to provision dev farm 127
+1. login to rundek  :  https://34.56.193.212:4443/
+2. select the project distarch
+3. select 'Provision Compute Nodes'
+4. use ComputeMasterDev for bot master/worker node tag, the ComputeMasterTest is for test farm, ComputeMasterAccept is for acceptance farm
+5. click 'run job now'
