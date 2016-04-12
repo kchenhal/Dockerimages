@@ -1,0 +1,6 @@
+mesos, singularity
+spark, hardoop
+docker, weave
+zookeeper,consul
+TACHYON, Cassandra
+rundeck
