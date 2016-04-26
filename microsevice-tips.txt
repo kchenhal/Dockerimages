@@ -105,3 +105,9 @@ Rundek to provision dev farm 127
 3. select 'Provision Compute Nodes'
 4. use ComputeMasterDev for bot master/worker node tag, the ComputeMasterTest is for test farm, ComputeMasterAccept is for acceptance farm
 5. click 'run job now'
+
+kafka configuration:
+1. to be able to be consumed by external host, need change the server.peroperties, set the ip address of the host
+   advertised.host.name=34.36.105.44
+   also need change the listeners:
+   listeners=PLAINTEXT://0.0.0.0:9092
