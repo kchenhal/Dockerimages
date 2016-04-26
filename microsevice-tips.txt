@@ -111,3 +111,5 @@ kafka configuration:
    advertised.host.name=34.36.105.44
    also need change the listeners:
    listeners=PLAINTEXT://0.0.0.0:9092
+2. to be able to delete a topic, need enable 
+   delete.topic.enable=true
