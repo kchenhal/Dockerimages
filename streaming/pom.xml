@@ -3,24 +3,27 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.kaazing</groupId>
-        <artifactId>gateway</artifactId>
-        <version>develop-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
-    </parent>
+    <groupId>com.lgc</groupId>
     <artifactId>gateway.service.streaming.filetransfer</artifactId>
     <name>File Transfer Service</name>
     <description>Gateway service that transfer file to client</description>
+    <version>develop-SNAPSHOT</version>
 
-	<!--
-    <url>https://github.com/kaazing/gateway.service.echo.git</url>
-    <scm>
-        <connection>scm:git:${project.scm.url}</connection>
-        <developerConnection>scm:git:${project.scm.url}</developerConnection>
-        <url>git@github.com:kaazing/gateway.service.echo.git</url>
-    </scm>
-	-->
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.testSource>1.8</maven.compiler.testSource>
+        <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
+        <hazelcast.version>1.9.4.8</hazelcast.version>
+        <k3po.version>3.0.0-alpha-29</k3po.version>
+        <jdom.version>1.1</jdom.version>
+        <jmock.version>2.6.0</jmock.version>
+        <slf4j.log4j.version>1.7.5</slf4j.log4j.version>
+        <agrona.version>0.4.2</agrona.version>
+        <enforcer.skip>true</enforcer.skip>
+    </properties>
+
+	
 
     <dependencies>
         <dependency>
@@ -41,6 +44,8 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.kaazing</groupId>
