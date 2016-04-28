@@ -85,7 +85,7 @@ public class CmdConsumer {
 					InputStream is = new FileInputStream(new File(item.cmdArguments));
 					BufferedInputStream bis = new BufferedInputStream(is);
 
-					int len = 1024;
+					int len = 120*1024;
 					int offset = 0;
 					byte[] outBuf = new byte[len];
 					int readLen = -1;

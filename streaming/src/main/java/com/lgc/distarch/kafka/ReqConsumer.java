@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.lgc.distarch.streaming.filetransfer.CommandItem;
+import com.lgc.distarch.streaming.message.DaMessages;
 
 public class ReqConsumer {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -58,16 +59,16 @@ public class ReqConsumer {
 				}
 
 				byte[] bytes = record.value();
+				ByteBuffer msg = DaMessages.buildBinaryData(topic, bytes);
 				if (bytes == null) {
 					this.stop = true;
-					System.out.println("end of the topic for "+topic);
+					System.out.println("end of the topic for " + topic);
 					KTopic.deleteTopic(zkUrl, topic);
 					// delete the queue topic
-				} else {
-					// send it to client
-					IoBufferEx ioBuf = allocator.wrap(ByteBuffer.wrap(bytes), IoBufferEx.FLAG_NONE);
-			    	session.write(ioBuf);
 				}
+				// send it to client
+				IoBufferEx ioBuf = allocator.wrap(msg, IoBufferEx.FLAG_NONE);
+				session.write(ioBuf);
 			}
 		}
 	}

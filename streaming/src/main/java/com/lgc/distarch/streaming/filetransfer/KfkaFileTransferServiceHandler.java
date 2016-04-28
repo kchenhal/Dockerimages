@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import com.lgc.distarch.kafka.CmdProducer;
 import com.lgc.distarch.kafka.KTopic;
 import com.lgc.distarch.kafka.ReqConsumer;
+import com.lgc.distarch.streaming.message.DaMessages;
 
 public class KfkaFileTransferServiceHandler extends IoHandlerAdapter<IoSessionEx>  {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -33,7 +34,8 @@ public class KfkaFileTransferServiceHandler extends IoHandlerAdapter<IoSessionEx
 	protected void doMessageReceived(final IoSessionEx session, Object message) throws Exception {
 		if (message instanceof IoBuffer) {
 			final IoBuffer buffer = (IoBuffer) message;
-			String msg = new String(buffer.array(), buffer.arrayOffset(), buffer.remaining());
+//			String msg = new String(buffer.array(), buffer.arrayOffset(), buffer.remaining());
+			String msg = DaMessages.getCommand(buffer.array(), buffer.arrayOffset(), buffer.remaining());
 			logger.warn("msg got is " + msg);
 
 			CommandItem item = CommandItem.fromJson(msg);

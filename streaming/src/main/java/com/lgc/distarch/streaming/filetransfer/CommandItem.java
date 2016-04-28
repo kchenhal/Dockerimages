@@ -14,7 +14,6 @@ public class CommandItem implements Serializable{
 	
 	public CommandItem(String requestId, String gateWayUrl, String cmd, String args) {
 		this.requestId = requestId;
-		this.gateWayUrl = gateWayUrl;
 		this.cmd = cmd;
 		this.cmdArguments = args;
 	}

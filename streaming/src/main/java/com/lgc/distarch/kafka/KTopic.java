@@ -36,7 +36,7 @@ public class KTopic {
 	}
 	
 	public static void main(String[] args) {
-		createTopic("34.36.105.44:2181", "test2", 2, 1);
-//		deleteTopic("34.36.105.44:2181", "test");
+//		createTopic("34.36.105.44:2181", "test2", 2, 1);
+		deleteTopic("34.36.105.44:2181", "request-23");
 	}
 }
