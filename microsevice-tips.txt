@@ -113,3 +113,7 @@ kafka configuration:
    listeners=PLAINTEXT://0.0.0.0:9092
 2. to be able to delete a topic, need enable 
    delete.topic.enable=true
+
+Kaazing 
+1. max incoming message size
+   org.kaazing.gateway.transport.ws.util.WSMessageTooLongException: Incoming message size 133021 bytes exceeds permitted maximum of 131072 bytes
