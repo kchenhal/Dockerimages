@@ -13,6 +13,8 @@ import com.lgc.distarch.kafka.KTopic;
 import com.lgc.distarch.kafka.ReqConsumer;
 import com.lgc.distarch.streaming.message.DaMessages;
 
+import kafka.common.TopicExistsException;
+
 public class KfkaFileTransferServiceHandler extends IoHandlerAdapter<IoSessionEx>  {
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	private final static String topic = "getFile";
@@ -42,7 +44,11 @@ public class KfkaFileTransferServiceHandler extends IoHandlerAdapter<IoSessionEx
 			item.gateWayUrl = "ws://localhost:8000/filetransfer";
 
 			// create a new topic based on the request id to kafa queue.
-			KTopic.createTopic(zkUrl, item.requestId, 1, 1);
+			try {
+				KTopic.createTopic(zkUrl, item.requestId, 1, 1);
+			} catch (TopicExistsException e) {
+				System.out.println("ignore the topic existed exception:"+e.getLocalizedMessage());
+			}
 			// starting the consumer thread.
 			new Thread() {
 				public void run() {
