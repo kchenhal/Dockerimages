@@ -28,14 +28,12 @@ server:
    - "1099"
   ports:
    - "40404"
-  depends_on:
-   -locator
   volumes:
    - ./apache.geode/:/scripts/
    #- scripts/:/data/
   command: /scripts/startServer.sh --server-port=40404 --hostname-for-clients=192.168.99.100 --max-heap=1G
 
-zookeepker:
+zookeeper:
   image:  kchen007/kafka
   expose:
    - "2181"
@@ -49,7 +47,12 @@ kafka:
    - "9092"
   ports:
    - "9092:9092"
-  depends_on:
-   - zookeeper
   command: bin/kafka-server-start.sh config/server.properties
+
+gateway:
+   image: kchen007/gateway
+   expose:
+    - "8000"
+   ports:
+    - "8000:8000"
 
