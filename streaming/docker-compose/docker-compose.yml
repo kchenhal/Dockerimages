@@ -47,6 +47,8 @@ kafka:
    - "9092"
   ports:
    - "9092:9092"
+  volumes:
+   - kafka_lib:/kafka_2.11-0.9.0.1/libs
   command: bin/kafka-server-start.sh config/server.properties
 
 gateway:
@@ -55,4 +57,7 @@ gateway:
     - "8000"
    ports:
     - "8000:8000"
+   volumes_from:
+    - kafka:ro
+   command: /bin/bash
 

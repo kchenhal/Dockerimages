@@ -19,4 +19,4 @@ COPY run_kafka.sh .
 RUN chmod 755 run_kafka.sh \
     && cd /kafka_2.11-0.9.0.1
 
-ENTRYPOINT ./run_kafka.sh
+# ENTRYPOINT ./run_kafka.sh
