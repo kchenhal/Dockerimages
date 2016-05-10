@@ -1,8 +1,8 @@
 # Apache Geode
 locator:
   image: apachegeode/geode:1.0.0-incubating.M2
-  hostname: locator
-  mem_limit: 512m
+#  hostname: 172.16.22.35
+  mem_limit: 2048m
   expose:
    - "10334"
    - "1099"
@@ -30,9 +30,10 @@ server:
    - "40404"
   volumes:
    - ./apache.geode/:/scripts/
-  command: /scripts/startServer.sh --server-port=40404 --hostname-for-clients=localhost --max-heap=1G
   links:
    - locator
+  command: /scripts/startServer.sh --server-port=40404 --locators=locator[10334] --max-heap=1G
+#  command: /scripts/startServer.sh --server-port=40404 --hostname-for-clients=localhost --max-heap=1G
 
 zookeeper:
   image:  kchen007/kafka

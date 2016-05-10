@@ -2,7 +2,12 @@
 
 mkdir -p /data/$HOSTNAME
 
-gfsh start server --name=$HOSTNAME --locators=locator[10334] --dir=/data/$HOSTNAME/ "$@"
+echo 'sleeping 20s'
+sleep 20
+
+echo 'wakeup'
+
+gfsh start server --name=$HOSTNAME --dir=/data/$HOSTNAME/ "$@"
 
 while true; do
     sleep 10
