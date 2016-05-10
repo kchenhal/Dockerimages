@@ -1,13 +1,12 @@
 # Apache Geode
 locator:
-  image: apachegeode/geode:1.0.0-incubating.M1
+  image: apachegeode/geode:1.0.0-incubating.M2
   hostname: locator
   mem_limit: 512m
   expose:
    - "10334"
    - "1099"
    - "7575"
-  #  - "1024"
   ports:
    - "1099:1099"
    - "10334:10334"
@@ -15,10 +14,11 @@ locator:
    - "7070:7070"
   volumes:
    - ./apache.geode/:/scripts/
-  command: /scripts/gfshWrapper.sh gfsh start locator --J="-Dgemfire.jmx-manager-hostname-for-clients=localhost" --hostname-for-clients=localhost --name=locator --mcast-port=0
+  command: /scripts/gfshWrapper.sh gfsh start locator --name=locator --mcast-port=0
+#  command: /scripts/gfshWrapper.sh gfsh start locator --J="-Dgemfire.jmx-manager-hostname-for-clients=localhost" --hostname-for-clients=localhost --name=locator --mcast-port=0
 
 server:
-  image: apachegeode/geode:1.0.0-incubating.M1
+  image: apachegeode/geode:1.0.0-incubating.M2
   mem_limit: 2g
   links:
    - locator:locator
@@ -30,8 +30,9 @@ server:
    - "40404"
   volumes:
    - ./apache.geode/:/scripts/
-   #- scripts/:/data/
-  command: /scripts/startServer.sh --server-port=40404 --hostname-for-clients=192.168.99.100 --max-heap=1G
+  command: /scripts/startServer.sh --server-port=40404 --hostname-for-clients=localhost --max-heap=1G
+  links:
+   - locator
 
 zookeeper:
   image:  kchen007/kafka
@@ -47,9 +48,9 @@ kafka:
    - "9092"
   ports:
    - "9092:9092"
-  volumes:
-   - kafka_lib:/kafka_2.11-0.9.0.1/libs
-  command: bin/kafka-server-start.sh config/server.properties
+  links:
+   - zookeeper
+  command: bin/kafka-server-start.sh config/server.properties --override zookeeper.connect=zookeeper:2181
 
 gateway:
    image: kchen007/gateway
@@ -57,7 +58,11 @@ gateway:
     - "8000"
    ports:
     - "8000:8000"
-   volumes_from:
-    - kafka:ro
-   command: /bin/bash
+   links:
+    - locator
+    - server
+    - kafka
+   environment:
+#    - GATEWAY_OPTS=-Dgeode.locator.name=locator
+    - GATEWAY_OPTS=-DkafkaServers=kafka:9092 -Dgeode.locator.name=172.16.22.35
 
