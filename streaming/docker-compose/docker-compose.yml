@@ -68,7 +68,7 @@ gateway:
     - kafka
    environment:
 #    - GATEWAY_OPTS=-Dgeode.locator.name=locator
-    - GATEWAY_OPTS=-DkafkaServers=172.16.22.35:9092 -Dgeode.locator.name=172.16.22.35 -Dgateway.hostname=172.16.22.35
+    - GATEWAY_OPTS=-DkafkaServers=kafka:9092 -Dgeode.locator.name=locator -Dgateway.hostname=172.16.22.35
    volumes:
     - ./kazzing.gateway/scripts/:/scripts/
    command: /scripts/startServer.sh 
