@@ -2,10 +2,10 @@
 
 mkdir -p /data/$HOSTNAME
 
-echo 'sleeping 20s'
-sleep 20
+echo 'sleeping 15'
+sleep 15
 
-echo 'wakeup'
+echo 'wakeup geode server'
 
 gfsh start server --name=$HOSTNAME --dir=/data/$HOSTNAME/ "$@"
 

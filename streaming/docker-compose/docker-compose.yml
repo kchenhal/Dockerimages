@@ -15,7 +15,7 @@ locator:
   volumes:
    - ./apache.geode/:/scripts/
   command: /scripts/gfshWrapper.sh gfsh start locator --name=locator --mcast-port=0
-#  command: /scripts/gfshWrapper.sh gfsh start locator --J="-Dgemfire.jmx-manager-hostname-for-clients=localhost" --hostname-for-clients=localhost --name=locator --mcast-port=0
+#  command: /scripts/gfshWrapper.sh gfsh start locator --J="-Dgemfire.jmx-manager-hostname-for-clients=172.16.22.35" --hostname-for-clients=172.16.22.35 --name=locator --mcast-port=0
 
 server:
   image: apachegeode/geode:1.0.0-incubating.M2
@@ -33,7 +33,7 @@ server:
   links:
    - locator
   command: /scripts/startServer.sh --server-port=40404 --locators=locator[10334] --max-heap=1G
-#  command: /scripts/startServer.sh --server-port=40404 --hostname-for-clients=localhost --max-heap=1G
+#  command: /scripts/startServer.sh --server-port=40404 --locators=locator[10334] --hostname-for-clients=172.16.22.35 --max-heap=1G
 
 zookeeper:
   image:  kchen007/kafka
@@ -68,7 +68,17 @@ gateway:
     - kafka
    environment:
 #    - GATEWAY_OPTS=-Dgeode.locator.name=locator
-    - GATEWAY_OPTS=-DkafkaServers=172.16.22.35:9092 -Dgeode.locator.name=172.16.22.35
+    - GATEWAY_OPTS=-DkafkaServers=172.16.22.35:9092 -Dgeode.locator.name=172.16.22.35 -Dgateway.hostname=172.16.22.35
    volumes:
     - ./kazzing.gateway/scripts/:/scripts/
    command: /scripts/startServer.sh 
+
+cmdhandler:
+  image: kchen007/cmdhandler 
+  links:
+   - locator
+   - server
+   - kafka
+  volumes:
+   - ./cmdhandler/scripts/:/scripts/
+  command: /scripts/startCmdHandler.sh kafka:9092 getFile locator 10334
