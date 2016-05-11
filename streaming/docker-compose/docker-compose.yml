@@ -51,7 +51,10 @@ kafka:
    - "9092:9092"
   links:
    - zookeeper
-  command: bin/kafka-server-start.sh config/server.properties --override zookeeper.connect=zookeeper:2181
+# when kafka return its connection information to client, it will use its hostname, in this case the container id
+# if the client is not running within the composer, it cannot resolve the hostname. so we override the host name here with local ip 
+# address
+  command: bin/kafka-server-start.sh config/server.properties --override zookeeper.connect=zookeeper:2181 --override advertised.host.name=172.16.22.35
 
 gateway:
    image: kchen007/gateway
@@ -65,7 +68,7 @@ gateway:
     - kafka
    environment:
 #    - GATEWAY_OPTS=-Dgeode.locator.name=locator
-    - GATEWAY_OPTS=-DkafkaServers=kafka:9092 -Dgeode.locator.name=172.16.22.35
+    - GATEWAY_OPTS=-DkafkaServers=172.16.22.35:9092 -Dgeode.locator.name=172.16.22.35
    volumes:
     - ./kazzing.gateway/scripts/:/scripts/
    command: /scripts/startServer.sh 
