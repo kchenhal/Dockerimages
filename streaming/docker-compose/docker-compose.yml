@@ -76,6 +76,8 @@ gateway:
 cmdhandler:
   image: kchen007/cmdhandler 
   links:
+# I have to add both locator and server as links, so that those host name can be seen in cmdhandler. otherwise
+# it cannot publish to the cache
    - locator
    - server
    - kafka
