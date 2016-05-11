@@ -6,7 +6,7 @@ sleep 20
 IPADDRESS=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
 echo $IPADDRESS
 
-GATEWAY_OPTS="$GATEWAY_OPTS -Dgateway.hostname=$IPADDRESS"
+GATEWAY_OPTS="$GATEWAY_OPTS -Dgateway.internal.hostname=$IPADDRESS"
 echo $GATEWAY_OPTS
 echo 'wakeup gateway'
 

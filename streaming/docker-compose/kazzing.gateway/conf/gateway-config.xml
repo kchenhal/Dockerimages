@@ -41,8 +41,20 @@
       <name>gateway.hostname</name>
       <value>localhost</value>
     </property>
+
+    <!-- if running from container, it has its own hostname and ip address -->
+    <property>
+      <name>gateway.internal.hostname</name>
+      <value>localhost</value>
+    </property>
+
     <property>
       <name>gateway.port</name>
+      <value>8000</value>
+    </property>
+
+    <property>
+      <name>gateway.internal.port</name>
       <value>8000</value>
     </property>
 
@@ -81,6 +93,10 @@
       <error-pages-directory>/error-pages</error-pages-directory>
       <options>indexes</options>
     </properties>
+
+    <accept-options>
+       <http.bind>${gateway.internal.hostname}:${gateway.internal.port}</http.bind>
+    </accept-options>
   </service>
 
 
@@ -90,6 +106,9 @@
     <accept>ws://${gateway.hostname}:${gateway.port}/echo</accept>
 
     <type>echo</type>
+    <accept-options>
+       <ws.bind>${gateway.internal.hostname}:${gateway.internal.port}</ws.bind>
+    </accept-options>
 
     <!-- Restrict cross site constraints before running in production -->
     <cross-site-constraint>
@@ -108,6 +127,9 @@
 		<geodeLocatorPort>${geode.locator.port}</geodeLocatorPort>
 		<geodeJmxPort>${geode.jmx.port}</geodeJmxPort>
 	</properties>
+    <accept-options>
+       <ws.bind>${gateway.internal.hostname}:${gateway.internal.port}</ws.bind>
+    </accept-options>
   </service>
 
 
