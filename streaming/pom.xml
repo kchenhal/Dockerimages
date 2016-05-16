@@ -3,10 +3,10 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.lgc</groupId>
-    <artifactId>gateway.service.streaming.filetransfer</artifactId>
-    <name>File Transfer Service</name>
-    <description>Gateway service that transfer file to client</description>
+    <groupId>com.lgc.distarch</groupId>
+    <artifactId>distarch_streaming</artifactId>
+    <name>streaming service</name>
+    <description>Gateway service that streaming file to client</description>
     <version>develop-SNAPSHOT</version>
 
     <properties>

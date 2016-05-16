@@ -52,6 +52,10 @@ running docker web app behind nginx with load banlancer(the nginx is running on 
   		}
   }
 
+Docker machine
+#create a docker machine behind firewall
+  docker-machine create -d virtualbox --engine-env HTTP_PROXY=http://<user>:<password>@<proxy-server>:<proxy-port>   --engine-env HTTPS_PROXY=https://<user>:<password>@<proxy-server>:<proxy-port> default
+  
 Swagger editor from an existing project:
 E:\aws-related\swagger-project\hello-world>swagger project edit
 

@@ -1,7 +1,7 @@
 {
     "deploy": {
-        "requestId": "kc-run-once-1",
-        "id": "5",
+        "requestId": "kc-test-2",
+        "id": "1",
         "command": "java -Ddw.server.applicationConnectors[0].port=$PORT1 -Ddw.server.adminConnectors[0].port=$PORT0  -jar helloworld-1.0-SNAPSHOT.jar server example.yml",
         "resources": {
             "cpus": 0.1,

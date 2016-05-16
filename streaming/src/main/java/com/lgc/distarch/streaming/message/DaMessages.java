@@ -106,6 +106,10 @@ public class DaMessages {
 		return buf;
 	}
 	
+	public static ByteBuffer buildEndOfStreamingMsg(String id) {
+		return buildBinaryData(id, null);
+	}
+	
 	/**
 	 * Get the command from the message.
 	 * @param msg
