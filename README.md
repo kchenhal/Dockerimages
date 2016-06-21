@@ -23,6 +23,8 @@
     /etc/mesos-slave
   - [ec2-user@ip-172-16-22-29 mesos-slave]$ ls
     containerizers  docker_socket  executor_environment_variables  executor_registration_timeout  hostname  resources
+
+- https://open.mesosphere.com/reference/mesos-slave/
   
 **Json format**
   >- resources {
