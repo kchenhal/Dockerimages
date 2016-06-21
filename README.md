@@ -8,7 +8,7 @@
   -     export SPARK_EXECUTOR_URI=http://apache.cs.utah.edu/spark/spark-1.6.1/spark-1.6.1-bin-hadoop2.6.tgz  
   
 # Mesos slave, set port ranges
-  >**Command Line:**
+**Command Line:**
   >- --resources=ports:[80-32000]
   
   in the slave machine, got to /etc/mesos-slave directory, create a file that corresponding to the mesos-slave command line argument. in this case, create a file called 
