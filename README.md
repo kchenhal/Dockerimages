@@ -12,12 +12,19 @@
   >- --resources=ports:[80-32000]
   
   in the slave machine, got to /etc/mesos-slave directory, create a file that corresponding to the mesos-slave command line argument. in this case, create a file called 
+  
     'resources' 
+    
   the content of the file will be: 
+  
     'ports:[80-32000]' 
+>
+  - [ec2-user@ip-172-16-22-29 mesos-slave]$ pwd
+    /etc/mesos-slave
+  - [ec2-user@ip-172-16-22-29 mesos-slave]$ ls
+    containerizers  docker_socket  executor_environment_variables  executor_registration_timeout  hostname  resources
   
-  
-  >**Json format**
+**Json format**
   >- resources {
   name: "ports"
   type: RANGES
