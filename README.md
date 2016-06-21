@@ -7,9 +7,8 @@
   >- Need set, so that it can upload  the spark to mesos slave
   -     export SPARK_EXECUTOR_URI=http://apache.cs.utah.edu/spark/spark-1.6.1/spark-1.6.1-bin-hadoop2.6.tgz  
   
-  # Mesos slave, set port ranges
+# Mesos slave, set port ranges
   >**Command Line:**
-  
   >- --resources=ports:[80-32000]
   
   >**Json format**
