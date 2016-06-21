@@ -11,6 +11,12 @@
   >**Command Line:**
   >- --resources=ports:[80-32000]
   
+  in the slave machine, got to /etc/mesos-slave directory, create a file that corresponding to the mesos-slave command line argument. in this case, create a file called 
+    'resources' 
+  the content of the file will be: 
+    'ports:[80-32000]' 
+  
+  
   >**Json format**
   >- resources {
   name: "ports"
